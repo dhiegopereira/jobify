@@ -43,6 +43,9 @@ app.get('/admin/vagas', async(req, res) => {
     const vagas = await db.all('select * from vagas;')
     res.render('admin/vagas', { vagas })
 })
+app.get('/admin/vagas/nova', (req, res) => {
+    res.render('admin/nova-vaga')
+})
 app.get('/admin/vagas/delete/:id', async(req, res) => {
     const db = await dbConnection
     await db.run(`delete from vagas where id = ${req.params.id};`)
