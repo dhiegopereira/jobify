@@ -1,0 +1,16 @@
+
+<%- include('header') %>       
+<h2>Admin Vagas:</h2>
+<div>
+    <ul>
+        <% vagas.forEach( val => { %>
+        <li>
+            <%- val.titulo %> 
+            <a href='/admin/vagas/delete/<%- val.id %>'>Excluir</a>
+        </li>
+        
+        <% }) %>
+    </ul>
+</div>
+<%- include('footer') %>   
+
