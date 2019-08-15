@@ -19,3 +19,24 @@ ul {
     list-style: none;
     padding-left: 16px;
 }
+
+label {
+    display: block;
+    margin: 24px 0 4px 0;
+}
+
+input, select {
+    display: block;
+    padding: 10px;
+    width: 540px;
+}
+
+textarea {
+    padding: 10px;
+    width: 540px;
+    height: 320px;
+}
+
+button {
+    padding: 12px;
+}
