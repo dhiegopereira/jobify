@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 
 const sqlite = require('sqlite')
 const dbConnection = sqlite.open('banco.sqlite', { Promise })
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.get('/', async(request, response) => {
     
@@ -44,7 +46,34 @@ app.get('/admin/vagas', async(req, res) => {
     res.render('admin/vagas', { vagas })
 })
 app.get('/admin/vagas/nova', async(req, res) => {
-    res.render('admin/nova-vaga')
+    const db = await dbConnection
+    const categorias = await db.all('select * from categorias;')
+    res.render('admin/nova-vaga', { categorias })
+})
+app.post('/admin/vagas/nova', async(req, res) => {
+    const { titulo, descricao, categoria } = req.body
+    const db = await dbConnection
+    await db.run(`insert into vagas(categoria, titulo, descricao) 
+                  values('${categoria}', '${titulo}', '${descricao}');`)
+    res.redirect('/admin/vagas')
+})
+app.get('/admin/vagas/editar/:id', async(req, res) => {
+    const { id } = req.params
+    const db = await dbConnection
+    const categorias = await db.all('select * from categorias;')
+    const vaga = await db.get(`select * from vagas where id = ${id}`)
+    res.render('admin/editar-vaga', { categorias, vaga })
+})
+app.post('/admin/vagas/editar/:id', async(req, res) => {
+    const { titulo, descricao, categoria } = req.body
+    const { id } = req.params
+    const db = await dbConnection
+    await db.run(`update vagas set 
+                         categoria = ${categoria}, 
+                         titulo = '${titulo}', 
+                         descricao = '${descricao}'
+                  where id = ${id};`)
+    res.redirect('/admin/vagas')
 })
 app.get('/admin/vagas/delete/:id', async(req, res) => {
     const db = await dbConnection
