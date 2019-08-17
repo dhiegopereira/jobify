@@ -16,7 +16,7 @@
         <select name="categoria" id="">
             <% categorias.forEach(val => { %>
                 <option value='<%= val.id %>' <% if(vaga.categoria == val.id) { %> selected <% } %> ><%= val.categoria %></option>
-            <% }) %> 
+            <% }) %>
         </select><br>
 
         <button>Salvar</button>
