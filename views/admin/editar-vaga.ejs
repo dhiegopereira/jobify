@@ -15,15 +15,11 @@
         <label for="">Categoria</label>
         <select name="categoria" id="">
             <% categorias.forEach(val => { %>
-                <% if (vaga.id === val.id) { %>
-                <option value='<%= val.id %>' selected><%= val.categoria %></option>
-                <% } else { %>
-                <option value='<%= val.id %>'><%= val.categoria %></option>
-                <% } %>
+                <option value='<%= val.id %>' <% if(vaga.categoria == val.id) { %> selected <% } %> ><%= val.categoria %></option>
             <% }) %>
         </select><br>
 
-        <button>Enviar</button>
+        <button>Salvar</button>
     </form>
 </div>
 <%- include('footer') %>   
